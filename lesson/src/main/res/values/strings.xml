@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">微课堂</string>
+    <!--toolbar-->
+    <string name="toolbar_search_text">输入课程或教师名字</string>
+    <string name="app_introduce">名师指导，在线授课，助你健步如飞。</string>
+    <!--Home-->
+    <string name="home_find">发现课程</string>
+    <string name="home_mine">我的课程</string>
+    <string name="home_account">我的账户</string>
+    <!--category-->
+    <string name="category_close">关闭</string>
+    <!--footer-->
+    <string name="footer">一 暂无更多数据 一</string>
+    <!--mine-->
+    <string name="user_intro">时光不回头，当下最重要</string>
+    <string name="mine_address">收获地址</string>
+    <string name="mine_download">缓存中心</string>
+    <string name="mine_course">我的重点</string>
+    <string name="mine_order">我的订单</string>
+    <string name="mine_coupon">我的优惠券</string>
+    <string name="mine_group_booking">我的拼团</string>
+    <string name="mine_counsel">在线咨询</string>
+    <string name="mine_service">客服热线</string>
+    <string name="mine_setting">设置</string>
+    <string name="mine_counsel_time">周一至周日 9:00–24:00</string>
+</resources>

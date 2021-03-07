@@ -1,0 +1,124 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+
+    useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "com.example.lesson"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+        multiDexEnabled true
+        ndk {
+            //APP的build.gradle设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+        }
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "ResourceType"
+        abortOnError false
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+        jumboMode = true
+        preDexLibraries = false
+        additionalParameters = [
+                '--multi-dex',//多分包
+                '--set-max-idx-number=60000'//每个包内方法数上限
+        ]
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'me.jessyan:arms:2.5.2'
+    implementation 'me.jessyan:arms-imageloader-glide:2.5.2'
+
+    //view
+    implementation rootProject.ext.dependencies["autosize"]
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+    }
+    // 底部导航栏
+    implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
+    // 沉浸状态栏
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    // Fragment管理
+    implementation 'me.yokeyword:fragmentation:1.3.7'
+    // design
+    implementation 'com.android.support:design:28.0.0'
+    // Tablayout
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    // flowlayout
+    implementation 'com.hyman:flowlayout-lib:1.1.2'
+    // 基础适配器
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
+    // 仿魅族Banner
+    implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+    // Glide辅助
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
+    // 圆形头像
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+    // 布局状态
+    implementation 'com.github.nukc.stateview:library:1.5.4'
+    // 卡片布局
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    // 腾讯WebView
+    implementation 'com.tencent.sonic:sdk:3.1.0'
+    // 基础工具库
+    implementation "com.github.tamsiree.RxTool:RxKit:2.3.9"
+    // WebView
+    implementation 'com.just.agentweb:agentweb:4.1.3'
+    //视频播放器
+    implementation 'com.shuyu:GSYVideoPlayer:6.0.3'
+    // 引入multidex库
+//    implementation 'com.android.support:multidex:1.0.3'
+
+    //tools
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+
+    implementation rootProject.ext.dependencies["androideventbus"]
+//    implementation rootProject.ext.dependencies["eventbus"]
+
+    //test
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+    releaseImplementation rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["junit"]
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+}
